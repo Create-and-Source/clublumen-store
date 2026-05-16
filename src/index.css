@@ -55,7 +55,6 @@ img { max-width: 100%; display: block; }
 }
 
 .header-logo-img { height: 48px; width: auto; }
-.site-header:not(.scrolled) .header-logo-img { filter: brightness(0) invert(1); }
 
 .header-nav { display: flex; align-items: center; gap: 36px; }
 
@@ -100,7 +99,7 @@ img { max-width: 100%; display: block; }
   position: relative; z-index: 2; text-align: center; padding: 0 40px; max-width: 700px;
 }
 
-.hero-logo-img { height: 120px; width: auto; margin: 0 auto 24px; filter: brightness(0) invert(1); }
+.hero-logo-img { height: 120px; width: auto; margin: 0 auto 24px; }
 
 .hero-tagline {
   font-size: 16px; font-weight: 400; letter-spacing: 0.2em;
