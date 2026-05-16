@@ -235,7 +235,7 @@ function HomePage() {
   return (
     <>
       <section className="hero">
-        <div className="hero-bg-img" style={{ backgroundImage: 'url(/products/good-energy-hoodie-lifestyle.png)' }} />
+        <div className="hero-bg-img" style={{ backgroundImage: 'url(/products/extra-lifestyle.png)' }} />
         <div className="hero-overlay" />
         <motion.div
           className="hero-content"
