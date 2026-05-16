@@ -1,7 +1,8 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, useParams, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, Menu, X, ArrowRight, Minus, Plus, ChevronRight, Music, Coffee, Users } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ShoppingBag, Menu, X, ArrowRight, Minus, Plus, ChevronRight, Coffee, Music, Users } from 'lucide-react';
+import { products, collections } from './data/products';
 
 function InstagramIcon({ size = 18 }) {
   return (
@@ -12,7 +13,6 @@ function InstagramIcon({ size = 18 }) {
     </svg>
   );
 }
-import { products, collections } from './data/products';
 
 const CartContext = createContext();
 
@@ -71,8 +71,7 @@ function Header() {
       <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-inner">
           <Link to="/" className="header-logo">
-            <span className="logo-club">club</span>
-            <span className="logo-lumen">lumen</span>
+            <img src="/products/club-lumen-logo.png" alt="Club Lumen" className="header-logo-img" />
           </Link>
           <nav className="header-nav">
             <Link to="/shop">Shop</Link>
@@ -114,7 +113,6 @@ function CartDrawer() {
           <span className="cart-title">Cart ({cart.length})</span>
           <button onClick={() => setCartOpen(false)}><X size={20} /></button>
         </div>
-
         {cart.length === 0 ? (
           <div className="cart-empty">
             <ShoppingBag size={32} style={{ marginBottom: 16, opacity: 0.3 }} />
@@ -125,7 +123,7 @@ function CartDrawer() {
             <div className="cart-items">
               {cart.map(item => (
                 <div key={item.key} className="cart-item">
-                  <div className="cart-item-img" style={{ background: 'linear-gradient(135deg, #FF6B35, #FF3CAC, #00B4D8)' }} />
+                  <img src={item.product.images[0]} alt="" className="cart-item-img" />
                   <div className="cart-item-info">
                     <div className="cart-item-name">{item.product.name}</div>
                     <div className="cart-item-variant">{item.color} / {item.size}</div>
@@ -140,10 +138,7 @@ function CartDrawer() {
               ))}
             </div>
             <div className="cart-footer">
-              <div className="cart-total">
-                <span>Total</span>
-                <span>${cartTotal}</span>
-              </div>
+              <div className="cart-total"><span>Total</span><span>${cartTotal}</span></div>
               <button className="checkout-btn">Checkout <ArrowRight size={14} /></button>
             </div>
           </>
@@ -158,12 +153,11 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-inner">
         <div>
-          <div className="footer-brand-name">
-            <span className="logo-club">club</span>
-            <span className="logo-lumen">lumen</span>
-          </div>
+          <img src="/products/club-lumen-logo.png" alt="Club Lumen" style={{ width: 100, marginBottom: 16 }} />
           <p className="footer-brand-desc">
-            Coffee + Music + Community. The sober-curious morning rave experience. Phoenix, AZ.
+            Coffee + Music + Community.<br />
+            The sober-curious morning rave.<br />
+            Phoenix, AZ.
           </p>
           <div style={{ display: 'flex', gap: 16, marginTop: 20 }}>
             <a href="https://www.instagram.com/clublumen.az/" target="_blank" rel="noopener noreferrer" className="social-link">
@@ -174,9 +168,9 @@ function Footer() {
         <div className="footer-col">
           <h4>Shop</h4>
           <Link to="/shop">All Products</Link>
-          <Link to="/shop">Tanks</Link>
           <Link to="/shop">Tees</Link>
           <Link to="/shop">Hoodies</Link>
+          <Link to="/shop">Crops & Tanks</Link>
           <Link to="/shop">Accessories</Link>
         </div>
         <div className="footer-col">
@@ -202,54 +196,31 @@ function Footer() {
   );
 }
 
-/* PAGES */
-
 function ProductCard({ product, index }) {
   const navigate = useNavigate();
-
-  const getBg = () => {
-    const c = product.colors[0]?.hex;
-    if (c === '#111111' || c === '#2A2A2A') return 'linear-gradient(135deg, #1a1a2e, #16213e)';
-    if (c === '#FF6B35') return 'linear-gradient(135deg, #FF6B35, #FF8E53)';
-    if (c === '#FFFFFF') return 'linear-gradient(135deg, #ffecd2, #fcb69f)';
-    if (c === '#C8A2E8') return 'linear-gradient(135deg, #C8A2E8, #a18cd1)';
-    if (c === '#FF7F7F') return 'linear-gradient(135deg, #FF7F7F, #fda085)';
-    if (c === '#00B4D8') return 'linear-gradient(135deg, #00B4D8, #48CAE4)';
-    if (c === '#FF3CAC') return 'linear-gradient(135deg, #FF3CAC, #784BA0, #2B86C5)';
-    if (c === '#E0E7FF') return 'linear-gradient(135deg, #E0E7FF, #C7D2FE, #DDD6FE)';
-    if (c === '#E8A598') return 'linear-gradient(135deg, #E8A598, #dda0aa)';
-    if (c === '#F5F0E8') return 'linear-gradient(135deg, #ffecd2, #fcb69f)';
-    return 'linear-gradient(135deg, #FF6B35, #FF3CAC)';
-  };
 
   return (
     <motion.div
       className="product-card"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
+      transition={{ duration: 0.5, delay: index * 0.06 }}
       onClick={() => navigate(`/product/${product.id}`)}
     >
-      <div
-        className="product-card-img"
-        style={{
-          background: getBg(),
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}
-      >
-        <div className="product-card-logo">CL</div>
+      <div className="product-card-img-wrap">
+        <img src={product.images[0]} alt={product.name} className="product-card-img" loading="lazy" />
       </div>
       {product.badge && (
         <div className={`product-badge ${product.badge === 'Limited' ? 'badge-limited' : product.badge === 'New' ? 'badge-new' : 'badge-best'}`}>
           {product.badge}
         </div>
       )}
-      <div className="product-card-overlay">
+      <div className="product-card-info">
         <div className="product-card-name">{product.name}</div>
         <div className="product-card-price">
           {product.comparePrice && (
-            <span style={{ textDecoration: 'line-through', opacity: 0.5, marginRight: 8 }}>${product.comparePrice}</span>
+            <span style={{ textDecoration: 'line-through', opacity: 0.4, marginRight: 8 }}>${product.comparePrice}</span>
           )}
           ${product.price}
         </div>
@@ -264,65 +235,49 @@ function HomePage() {
   return (
     <>
       <section className="hero">
-        <div className="hero-bg" />
-        <div className="hero-glow hero-glow-1" />
-        <div className="hero-glow hero-glow-2" />
-        <div className="hero-glow hero-glow-3" />
+        <div className="hero-bg-img" style={{ backgroundImage: 'url(/products/good-energy-hoodie-lifestyle.png)' }} />
+        <div className="hero-overlay" />
         <motion.div
           className="hero-content"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
         >
-          <div className="hero-logo-main">
-            <span className="hero-club">club</span>
-            <span className="hero-lumen">lumen</span>
-          </div>
-          <div className="hero-tagline">Coffee + Music + Community</div>
-          <div className="hero-sub">The Morning Rave&trade; &mdash; Phoenix, AZ</div>
+          <img src="/products/club-lumen-logo.png" alt="Club Lumen" className="hero-logo-img" />
+          <div className="hero-tagline">The Morning Rave&trade; &mdash; Phoenix, AZ</div>
+          <div className="hero-slogans">Energy Is The New Currency</div>
           <Link to="/shop" className="hero-cta">
             Shop the Drop <ArrowRight size={14} />
           </Link>
         </motion.div>
-        <div className="hero-scroll">
-          <span>Scroll</span>
-          <div className="hero-scroll-line" />
-        </div>
       </section>
 
       <div className="marquee">
         <div className="marquee-track">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="marquee-item">
-              <span>Coffee</span><div className="marquee-dot" />
-              <span>Music</span><div className="marquee-dot" />
-              <span>Community</span><div className="marquee-dot" />
-              <span>The Morning Rave</span><div className="marquee-dot" />
-              <span>Sober Curious</span><div className="marquee-dot" />
-              <span>Dance at Dawn</span><div className="marquee-dot" />
-              <span>Coffee</span><div className="marquee-dot" />
-              <span>Music</span><div className="marquee-dot" />
-              <span>Community</span><div className="marquee-dot" />
-              <span>The Morning Rave</span><div className="marquee-dot" />
+              <span>Coffee</span><span className="marquee-dot">+</span>
+              <span>Music</span><span className="marquee-dot">+</span>
+              <span>Community</span><span className="marquee-dot">/</span>
+              <span>Dance Before Noon</span><span className="marquee-dot">/</span>
+              <span>Good Energy Club</span><span className="marquee-dot">/</span>
+              <span>Energy Is The New Currency</span><span className="marquee-dot">/</span>
+              <span>You Are So Welcomed</span><span className="marquee-dot">/</span>
+              <span>Coffee</span><span className="marquee-dot">+</span>
+              <span>Music</span><span className="marquee-dot">+</span>
+              <span>Community</span><span className="marquee-dot">/</span>
             </div>
           ))}
         </div>
       </div>
 
-      <section className="section section-light">
+      <section className="section section-warm">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="section-label">New Arrivals</div>
-            <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', marginBottom: 48 }}>
+            <div style={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between', marginBottom: 48, flexWrap: 'wrap', gap: 16 }}>
               <h2 className="section-title" style={{ marginBottom: 0 }}>The Drop</h2>
-              <Link to="/shop" className="view-all-link">
-                View All <ArrowRight size={14} />
-              </Link>
+              <Link to="/shop" className="view-all-link">View All <ArrowRight size={14} /></Link>
             </div>
           </motion.div>
           <div className="products-grid">
@@ -333,47 +288,32 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="gradient-divider">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 40px' }}
-        >
-          <h2 className="divider-title">The Morning Rave&trade;</h2>
-          <p className="divider-sub">Dance with coffee, not cocktails</p>
-        </motion.div>
+      <section className="lifestyle-banner">
+        <img src="/products/extra-lifestyle.png" alt="Club Lumen lifestyle" className="lifestyle-banner-img" />
+        <div className="lifestyle-banner-overlay" />
+        <div className="lifestyle-banner-content">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+            <h2>Dance Before Noon</h2>
+            <p>Energy Is The New Currency</p>
+            <Link to="/shop" className="hero-cta" style={{ marginTop: 32 }}>Shop Hoodies <ArrowRight size={14} /></Link>
+          </motion.div>
+        </div>
       </section>
 
-      <section className="section section-dark">
+      <section className="section section-cream">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="section-label" style={{ color: 'rgba(255,255,255,0.4)' }}>The Vibe</div>
-            <h2 className="section-title" style={{ color: '#fff' }}>What is Club Lumen?</h2>
-            <p className="section-subtitle" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              A sober-curious morning rave experience. Real DJs. Real coffee. Real community. No alcohol necessary.
-            </p>
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+            <div className="section-label">The Vibe</div>
+            <h2 className="section-title">What is Club Lumen?</h2>
+            <p className="section-subtitle">A sober-curious morning rave. Real DJs. Real coffee. Real community. No alcohol necessary.</p>
           </motion.div>
           <div className="values-grid">
             {[
               { icon: <Coffee size={28} />, title: 'Coffee', desc: 'Local roasters serving up the good stuff. Espresso, cold brew, matcha. The only buzz you need to dance.' },
               { icon: <Music size={28} />, title: 'Music', desc: 'Real DJs spinning real sets. House, disco, funk, feel-good energy. The kind of music that moves your body and your soul.' },
-              { icon: <Users size={28} />, title: 'Community', desc: 'Strangers become friends on the dance floor. Every event is a safe space to be yourself, move freely, and connect.' },
+              { icon: <Users size={28} />, title: 'Community', desc: 'Strangers become friends on the dance floor. A safe space to be yourself, move freely, and connect.' },
             ].map((v, i) => (
-              <motion.div
-                key={v.title}
-                className="value-item"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-              >
+              <motion.div key={v.title} className="value-item" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.15 }}>
                 <div className="value-icon">{v.icon}</div>
                 <div className="value-title">{v.title}</div>
                 <div className="value-desc">{v.desc}</div>
@@ -383,26 +323,19 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="gradient-divider gradient-divider-alt">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 40px' }}
-        >
-          <h2 className="divider-title">Limited Edition Drops</h2>
-          <p className="divider-sub">Once they're gone, they're gone</p>
-        </motion.div>
+      <section className="lifestyle-banner">
+        <img src="/products/move-body-tee-lifestyle.png" alt="Move Your Body" className="lifestyle-banner-img" />
+        <div className="lifestyle-banner-overlay" />
+        <div className="lifestyle-banner-content">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+            <h2>Move Your Body</h2>
+            <p>Morning Rave &mdash; AZ</p>
+          </motion.div>
+        </div>
       </section>
 
       <section className="newsletter">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
           <div className="newsletter-title">Join the Movement</div>
           <p className="newsletter-sub">First access to merch drops, event tickets, and exclusive colorways.</p>
           <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
@@ -422,26 +355,21 @@ function ShopPage() {
     : products;
 
   return (
-    <div style={{ paddingTop: 80, background: 'var(--bg)', minHeight: '100vh' }}>
-      <section className="section section-light" style={{ paddingBottom: 40 }}>
+    <div style={{ paddingTop: 80, minHeight: '100vh' }}>
+      <section className="section section-warm" style={{ paddingBottom: 40 }}>
         <div className="container">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <h1 className="section-title">Shop All</h1>
           </motion.div>
           <div className="filter-row">
             {collections.map(c => (
-              <button
-                key={c.id}
-                onClick={() => setActiveFilter(c.id)}
-                className={`filter-btn ${activeFilter === c.id ? 'active' : ''}`}
-              >
+              <button key={c.id} onClick={() => setActiveFilter(c.id)} className={`filter-btn ${activeFilter === c.id ? 'active' : ''}`}>
                 {c.name}
               </button>
             ))}
           </div>
         </div>
       </section>
-
       <section style={{ padding: '0 40px 120px' }}>
         <div className="container">
           <div className="products-grid">
@@ -460,52 +388,35 @@ function ProductPage() {
   const product = products.find(p => p.id === id);
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
+  const [mainImage, setMainImage] = useState(0);
   const { addToCart } = useCart();
 
-  if (!product) return <div style={{ padding: '200px 40px', textAlign: 'center', color: '#000' }}>Product not found</div>;
+  if (!product) return <div style={{ padding: '200px 40px', textAlign: 'center' }}>Product not found</div>;
 
   const handleAdd = () => {
     if (!selectedSize) return;
     addToCart(product, product.colors[selectedColor].name, selectedSize);
   };
 
-  const getGalleryBg = (hex) => {
-    if (hex === '#111111' || hex === '#2A2A2A') return 'linear-gradient(135deg, #1a1a2e, #16213e)';
-    if (hex === '#FF6B35') return 'linear-gradient(135deg, #FF6B35, #FF8E53)';
-    if (hex === '#FFFFFF' || hex === '#F5F0E8') return 'linear-gradient(135deg, #ffecd2, #fcb69f)';
-    if (hex === '#C8A2E8') return 'linear-gradient(135deg, #C8A2E8, #a18cd1)';
-    if (hex === '#FF7F7F') return 'linear-gradient(135deg, #FF7F7F, #fda085)';
-    if (hex === '#00B4D8') return 'linear-gradient(135deg, #00B4D8, #48CAE4)';
-    if (hex === '#FF3CAC') return 'linear-gradient(135deg, #FF3CAC, #784BA0)';
-    if (hex === '#E0E7FF') return 'linear-gradient(135deg, #E0E7FF, #C7D2FE, #DDD6FE)';
-    if (hex === '#E8A598') return 'linear-gradient(135deg, #E8A598, #dda0aa)';
-    return 'linear-gradient(135deg, #FF6B35, #FF3CAC)';
-  };
-
   return (
     <div className="product-page">
       <div className="product-layout">
         <div className="product-gallery">
-          {product.colors.map((c, i) => (
-            <div
-              key={i}
-              className="product-gallery-img"
-              style={{
-                background: getGalleryBg(c.hex),
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}
-            >
-              <span style={{ fontSize: 48, fontWeight: 900, color: 'rgba(255,255,255,0.15)', letterSpacing: 4 }}>CL</span>
+          <div className="product-gallery-main">
+            <img src={product.images[mainImage]} alt={product.name} />
+          </div>
+          {product.images.length > 1 && (
+            <div className="product-gallery-thumbs">
+              {product.images.map((img, i) => (
+                <button key={i} className={`thumb ${mainImage === i ? 'active' : ''}`} onClick={() => setMainImage(i)}>
+                  <img src={img} alt="" />
+                </button>
+              ))}
             </div>
-          ))}
+          )}
         </div>
 
-        <motion.div
-          className="product-info"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        <motion.div className="product-info" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
           <div className="product-breadcrumb">
             <Link to="/shop">Shop</Link> <ChevronRight size={10} style={{ margin: '0 6px' }} /> {product.category}
           </div>
@@ -518,9 +429,7 @@ function ProductPage() {
 
           <h1 className="product-name">{product.name}</h1>
           <div className="product-price">
-            {product.comparePrice && (
-              <span style={{ textDecoration: 'line-through', color: '#999', marginRight: 12 }}>${product.comparePrice}</span>
-            )}
+            {product.comparePrice && <span style={{ textDecoration: 'line-through', color: '#999', marginRight: 12 }}>${product.comparePrice}</span>}
             ${product.price}
           </div>
           <p className="product-desc">{product.description}</p>
@@ -530,12 +439,7 @@ function ProductPage() {
               <div className="option-label">Color — {product.colors[selectedColor].name}</div>
               <div className="color-options">
                 {product.colors.map((c, i) => (
-                  <button
-                    key={c.name}
-                    className={`color-swatch ${selectedColor === i ? 'active' : ''}`}
-                    style={{ background: c.hex === '#FFFFFF' ? '#f0f0f0' : c.hex }}
-                    onClick={() => setSelectedColor(i)}
-                  />
+                  <button key={c.name} className={`color-swatch ${selectedColor === i ? 'active' : ''}`} style={{ background: c.hex === '#FFFFFF' ? '#f0f0f0' : c.hex }} onClick={() => setSelectedColor(i)} />
                 ))}
               </div>
             </>
@@ -544,13 +448,7 @@ function ProductPage() {
           <div className="option-label">Size</div>
           <div className="size-options">
             {product.sizes.map(s => (
-              <button
-                key={s}
-                className={`size-btn ${selectedSize === s ? 'active' : ''}`}
-                onClick={() => setSelectedSize(s)}
-              >
-                {s}
-              </button>
+              <button key={s} className={`size-btn ${selectedSize === s ? 'active' : ''}`} onClick={() => setSelectedSize(s)}>{s}</button>
             ))}
           </div>
 
@@ -564,9 +462,16 @@ function ProductPage() {
 }
 
 function CollectionsPage() {
+  const drops = [
+    { title: 'The Morning Rave', sub: 'Core Collection', img: '/products/morning-rave-hoodie-lifestyle.png', gradient: 'rgba(26,63,199,0.7)' },
+    { title: 'Good Energy Club', sub: 'Hoodies & Crews', img: '/products/good-energy-hoodie-lifestyle.png', gradient: 'rgba(240,182,200,0.6)' },
+    { title: 'Desert Disco', sub: 'Crops & Tanks', img: '/products/welcomed-crop-lifestyle.png', gradient: 'rgba(197,160,88,0.5)' },
+    { title: 'Dance Before Noon', sub: 'Festival Season', img: '/products/extra-lifestyle.png', gradient: 'rgba(245,214,198,0.5)' },
+  ];
+
   return (
-    <div style={{ paddingTop: 80, background: 'var(--bg)', minHeight: '100vh' }}>
-      <section className="section section-light">
+    <div style={{ paddingTop: 80, minHeight: '100vh' }}>
+      <section className="section section-warm">
         <div className="container">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <h1 className="section-title">Collections</h1>
@@ -574,54 +479,19 @@ function CollectionsPage() {
           </motion.div>
         </div>
       </section>
-
-      <div className="editorial-grid" style={{ margin: '0 40px' }}>
-        <Link to="/shop" className="editorial-block" style={{
-          background: 'linear-gradient(135deg, #FF6B35, #FF3CAC)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          minHeight: 500,
-        }}>
-          <div style={{ textAlign: 'center', color: '#fff' }}>
-            <div style={{ fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, marginBottom: 12 }}>Core</div>
-            <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: -1 }}>The Morning Rave</div>
-          </div>
-        </Link>
-        <Link to="/shop" className="editorial-block" style={{
-          background: 'linear-gradient(135deg, #00B4D8, #784BA0)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          minHeight: 500,
-        }}>
-          <div style={{ textAlign: 'center', color: '#fff' }}>
-            <div style={{ fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, marginBottom: 12 }}>Limited</div>
-            <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: -1 }}>Festival Season</div>
-          </div>
-        </Link>
+      <div className="collections-grid">
+        {drops.map((d, i) => (
+          <Link key={i} to="/shop" className="collection-card">
+            <img src={d.img} alt={d.title} />
+            <div className="collection-card-overlay" style={{ background: `linear-gradient(to top, ${d.gradient}, transparent)` }} />
+            <div className="collection-card-content">
+              <div className="collection-card-sub">{d.sub}</div>
+              <div className="collection-card-title">{d.title}</div>
+            </div>
+          </Link>
+        ))}
       </div>
-
-      <div className="editorial-grid" style={{ margin: '2px 40px 0' }}>
-        <Link to="/shop" className="editorial-block" style={{
-          background: 'linear-gradient(135deg, #1a1a2e, #16213e)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          minHeight: 400,
-        }}>
-          <div style={{ textAlign: 'center', color: '#fff' }}>
-            <div style={{ fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, marginBottom: 12 }}>Essentials</div>
-            <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: -1 }}>Accessories</div>
-          </div>
-        </Link>
-        <Link to="/shop" className="editorial-block" style={{
-          background: 'linear-gradient(135deg, #ffecd2, #fcb69f)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          minHeight: 400,
-        }}>
-          <div style={{ textAlign: 'center', color: '#111' }}>
-            <div style={{ fontSize: 14, letterSpacing: '0.2em', textTransform: 'uppercase', opacity: 0.6, marginBottom: 12 }}>Bundle</div>
-            <div style={{ fontSize: 48, fontWeight: 900, letterSpacing: -1 }}>Sets</div>
-          </div>
-        </Link>
-      </div>
-
-      <section className="newsletter" style={{ marginTop: 80 }}>
+      <section className="newsletter" style={{ marginTop: 0 }}>
         <div className="newsletter-title">Get Notified</div>
         <p className="newsletter-sub">Be the first to know when new collections drop.</p>
         <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
@@ -635,8 +505,8 @@ function CollectionsPage() {
 
 function AboutPage() {
   return (
-    <div style={{ paddingTop: 80, background: 'var(--bg)', minHeight: '100vh' }}>
-      <section className="section section-light">
+    <div style={{ paddingTop: 80, minHeight: '100vh' }}>
+      <section className="section section-warm">
         <div className="container" style={{ maxWidth: 700 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <div className="section-label">The Story</div>
@@ -649,30 +519,18 @@ function AboutPage() {
                 Founded in Phoenix, Arizona, The Morning Rave&trade; is a sober-curious dance experience that proves you don't need a drink in your hand to have the time of your life. We partner with local DJs, local coffee roasters, and local communities to create something genuinely special.
               </p>
               <p style={{ marginBottom: 24 }}>
-                From pool raves to yoga raves, hiking raves to cycle raves, we bring the energy wherever the community gathers. Every event is inclusive, welcoming, and built around one thing: connection through movement.
+                From pool raves to yoga raves, hiking raves to cycle raves — we bring the energy wherever the community gathers. Every event is inclusive, welcoming, and built around one thing: connection through movement.
               </p>
               <p>
-                This merch line is an extension of that energy. Pieces designed for the dance floor, the poolside, and everything in between. Made for people who move.
+                This merch is an extension of that energy. Pieces designed for the dance floor, the poolside, and everything in between. Made for people who move. You are so welcomed.
               </p>
             </div>
           </motion.div>
         </div>
       </section>
-
-      <div className="editorial-grid">
-        <div className="editorial-text-lumen">
-          <div className="about-logo-big">
-            <span className="hero-club">club</span>
-            <span className="hero-lumen">lumen</span>
-          </div>
-          <div className="editorial-quote-sub">Coffee + Music + Community</div>
-        </div>
-        <div className="editorial-block" style={{
-          background: 'linear-gradient(135deg, #FF6B35, #FF3CAC, #784BA0, #00B4D8)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 500,
-        }}>
-          <div style={{ fontSize: 120, fontWeight: 900, color: 'rgba(255,255,255,0.08)' }}>CL</div>
-        </div>
+      <div className="about-image-grid">
+        <img src="/products/extra-lifestyle.png" alt="Club Lumen" />
+        <img src="/products/move-body-tee-lifestyle.png" alt="Club Lumen" />
       </div>
     </div>
   );
