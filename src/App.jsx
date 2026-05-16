@@ -71,7 +71,7 @@ function Header() {
       <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="header-inner">
           <Link to="/" className="header-logo">
-            <img src="/products/club-lumen-logo.png" alt="Club Lumen" className="header-logo-img" />
+            <img src="/products/lumen-logo-v2.png" alt="Club Lumen" className="header-logo-img" />
           </Link>
           <nav className="header-nav">
             <Link to="/shop">Shop</Link>
@@ -153,7 +153,7 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-inner">
         <div>
-          <img src="/products/club-lumen-logo.png" alt="Club Lumen" style={{ width: 100, marginBottom: 16 }} />
+          <img src="/products/lumen-logo-v2.png" alt="Club Lumen" style={{ width: 100, marginBottom: 16 }} />
           <p className="footer-brand-desc">
             Coffee + Music + Community.<br />
             The sober-curious morning rave.<br />
@@ -243,7 +243,7 @@ function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
         >
-          <img src="/products/club-lumen-logo.png" alt="Club Lumen" className="hero-logo-img" />
+          <img src="/products/lumen-logo-v2.png" alt="Club Lumen" className="hero-logo-img" />
           <div className="hero-tagline">The Morning Rave&trade; &mdash; Phoenix, AZ</div>
           <div className="hero-slogans">Energy Is The New Currency</div>
           <Link to="/shop" className="hero-cta">
