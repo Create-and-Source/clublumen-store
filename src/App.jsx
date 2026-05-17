@@ -52,6 +52,41 @@ function ScrollToTop() {
   return null;
 }
 
+function Ticker() {
+  const items = [
+    'Coffee + Music + Community', 'Dance Before Noon', 'Energy Is The New Currency',
+    'Good Energy Club', 'You Are So Welcomed', 'Morning Rave', 'Phoenix, AZ',
+    'Sober-Curious', 'Move Your Body',
+  ];
+
+  return (
+    <div className="ticker">
+      <div className="ticker-track">
+        {[...Array(3)].map((_, rep) =>
+          items.map((item, i) => (
+            <span className="ticker-text" key={`${rep}-${i}`}>
+              {item}
+              <span className="ticker-dot" />
+            </span>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+function BigMarquee({ children, variant = 'dark' }) {
+  return (
+    <div className={`big-marquee big-marquee-${variant}`}>
+      <div className="big-marquee-track">
+        {[...Array(4)].map((_, i) => (
+          <span key={i} className="big-marquee-text">{children}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -200,22 +235,18 @@ function ProductCard({ product, index }) {
       )}
       <div className="product-card-info">
         <div className="product-card-name">{product.name}</div>
-        <div className="product-card-price">
-          {product.comparePrice && (
-            <span style={{ textDecoration: 'line-through', opacity: 0.4, marginRight: 8 }}>${product.comparePrice}</span>
-          )}
-          ${product.price}
-        </div>
+        <div className="product-card-price">${product.price}</div>
       </div>
     </motion.div>
   );
 }
 
 function HomePage() {
-  const featured = products.filter(p => p.featured);
+  const featured = products.filter(p => p.featured).slice(0, 6);
 
   return (
     <>
+      {/* HERO */}
       <section className="hero">
         <div className="hero-bg-img hero-bg-desktop" style={{ backgroundImage: 'url(/products/hero-wide.png)' }} />
         <div className="hero-bg-img hero-bg-mobile" style={{ backgroundImage: 'url(/products/extra-lifestyle.png)' }} />
@@ -235,25 +266,72 @@ function HomePage() {
         </motion.div>
       </section>
 
-      <div className="marquee">
-        <div className="marquee-track">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="marquee-item">
-              <span>Coffee</span><span className="marquee-dot">+</span>
-              <span>Music</span><span className="marquee-dot">+</span>
-              <span>Community</span><span className="marquee-dot">/</span>
-              <span>Dance Before Noon</span><span className="marquee-dot">/</span>
-              <span>Good Energy Club</span><span className="marquee-dot">/</span>
-              <span>Energy Is The New Currency</span><span className="marquee-dot">/</span>
-              <span>You Are So Welcomed</span><span className="marquee-dot">/</span>
-              <span>Coffee</span><span className="marquee-dot">+</span>
-              <span>Music</span><span className="marquee-dot">+</span>
-              <span>Community</span><span className="marquee-dot">/</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* TICKER */}
+      <Ticker />
 
+      {/* BIG MARQUEE 1 */}
+      <BigMarquee variant="coral">
+        <span className="filled">DANCE BEFORE NOON</span> <span className="big-marquee-sep">/</span> <span className="filled">GOOD ENERGY CLUB</span> <span className="big-marquee-sep">/</span>
+      </BigMarquee>
+
+      {/* INTRO */}
+      <motion.section
+        className="section section-warm"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <div className="section-label">The Movement</div>
+        <h2 className="section-title" style={{ maxWidth: 700 }}>More than merch. It's a feeling.</h2>
+        <p className="section-subtitle" style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto' }}>
+          Real DJs. Real coffee. Real community. No alcohol necessary. Every piece carries the energy of the dance floor into your everyday life.
+        </p>
+      </motion.section>
+
+      {/* SPREAD — Coffee Shop Girls */}
+      <section className="spread">
+        <div className="spread-img">
+          <img src="/products/coffee-shop-group.png" alt="Friends at coffee shop" loading="lazy" />
+        </div>
+        <motion.div
+          className="spread-text"
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="spread-label">Coffee + Music + Community</div>
+          <h2 className="spread-title">You Are So Welcomed</h2>
+          <p className="spread-body">
+            Strangers become friends on the dance floor. From the coffee shop to the pool deck, we bring the energy wherever the community gathers. This is what morning looks like when you're alive.
+          </p>
+          <Link to="/shop" className="spread-link">
+            Shop Crops & Tanks <ArrowRight size={14} />
+          </Link>
+        </motion.div>
+      </section>
+
+      {/* BIG MARQUEE 2 */}
+      <BigMarquee variant="dark">
+        <span className="coral">MORNING</span> <span className="filled">RAVE</span> <span className="big-marquee-sep">/</span> <span className="coral">CLUB</span> <span className="filled">LUMEN</span> <span className="big-marquee-sep">/</span>
+      </BigMarquee>
+
+      {/* PULLQUOTE */}
+      <motion.section
+        className="pullquote"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <p className="pullquote-text">
+          "The only buzz you need is the bass. <em>Dance before noon.</em> Energy is the new currency."
+        </p>
+      </motion.section>
+
+      {/* PRODUCTS */}
       <section className="section section-warm">
         <div className="container">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
@@ -271,24 +349,88 @@ function HomePage() {
         </div>
       </section>
 
+      {/* LIFESTYLE BANNER — Pool Party */}
       <section className="lifestyle-banner">
-        <img src="/products/extra-lifestyle.png" alt="Club Lumen lifestyle" className="lifestyle-banner-img" />
+        <img src="/products/pool-party-group.png" alt="Pool party" className="lifestyle-banner-img" />
         <div className="lifestyle-banner-overlay" />
         <div className="lifestyle-banner-content">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <h2>Dance Before Noon</h2>
-            <p>Energy Is The New Currency</p>
-            <Link to="/shop" className="hero-cta" style={{ marginTop: 32 }}>Shop Hoodies <ArrowRight size={14} /></Link>
+            <h2>Move Your<br />Body</h2>
+            <p>Morning Rave &mdash; Phoenix, AZ</p>
+            <Link to="/shop" className="hero-cta" style={{ marginTop: 32 }}>Shop Tees <ArrowRight size={14} /></Link>
           </motion.div>
         </div>
       </section>
 
+      {/* BIG MARQUEE 3 */}
+      <BigMarquee variant="cream">
+        <span className="filled">COFFEE</span> <span className="big-marquee-sep">+</span> <span>MUSIC</span> <span className="big-marquee-sep">+</span> <span className="filled">COMMUNITY</span> <span className="big-marquee-sep">/</span>
+      </BigMarquee>
+
+      {/* SPREAD REVERSE — Venue Friends */}
+      <section className="spread spread-reverse">
+        <motion.div
+          className="spread-text"
+          style={{ background: 'var(--cream)' }}
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="spread-label">The Culture</div>
+          <h2 className="spread-title">Good Energy Club</h2>
+          <p className="spread-body">
+            Heavyweight fleece, oversized fit, designed for the morning ravers. Front chest script, full back print. Three colorways that hit different. Built for people who move with intention.
+          </p>
+          <Link to="/shop" className="spread-link">
+            Shop Hoodies <ArrowRight size={14} />
+          </Link>
+        </motion.div>
+        <div className="spread-img">
+          <img src="/products/venue-friends.png" alt="Friends at The Morning Rave" loading="lazy" />
+        </div>
+      </section>
+
+      {/* PHOTO GRID */}
+      <div className="photo-grid">
+        <div className="photo-grid-item tall">
+          <img src="/products/cherry-lips-tank-lifestyle.png" alt="Cherry Lips Tank" loading="lazy" />
+          <div className="photo-grid-overlay"><span>Cherry Lips</span></div>
+        </div>
+        <div className="photo-grid-item">
+          <img src="/products/move-body-tee-lifestyle.png" alt="Move Your Body Tee" loading="lazy" />
+          <div className="photo-grid-overlay"><span>Move Your Body</span></div>
+        </div>
+        <div className="photo-grid-item">
+          <img src="/products/disco-crop-lifestyle.png" alt="Disco Ball Crop" loading="lazy" />
+          <div className="photo-grid-overlay"><span>Disco Ball</span></div>
+        </div>
+        <div className="photo-grid-item">
+          <img src="/products/welcomed-crop-lifestyle.png" alt="You Are So Welcomed" loading="lazy" />
+          <div className="photo-grid-overlay"><span>You Are So Welcomed</span></div>
+        </div>
+        <div className="photo-grid-item tall">
+          <img src="/products/morning-rave-hoodie-lifestyle.png" alt="Morning Rave Hoodie" loading="lazy" />
+          <div className="photo-grid-overlay"><span>Morning Rave</span></div>
+        </div>
+        <div className="photo-grid-item">
+          <img src="/products/tote-bag-lifestyle.png" alt="DJ Party Vibes Tote" loading="lazy" />
+          <div className="photo-grid-overlay"><span>Tote Bag</span></div>
+        </div>
+      </div>
+
+      {/* BIG MARQUEE 4 */}
+      <BigMarquee variant="blue">
+        <span className="filled">YOU ARE SO WELCOMED</span> <span className="big-marquee-sep">/</span> <span>ENERGY IS THE NEW CURRENCY</span> <span className="big-marquee-sep">/</span>
+      </BigMarquee>
+
+      {/* VALUES */}
       <section className="section section-cream">
         <div className="container">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <div className="section-label">The Vibe</div>
-            <h2 className="section-title">What is Club Lumen?</h2>
-            <p className="section-subtitle">A sober-curious morning rave. Real DJs. Real coffee. Real community. No alcohol necessary.</p>
+            <div className="section-label" style={{ textAlign: 'center' }}>The Vibe</div>
+            <h2 className="section-title" style={{ textAlign: 'center' }}>What is Club Lumen?</h2>
+            <p className="section-subtitle" style={{ textAlign: 'center', margin: '0 auto' }}>A sober-curious morning rave. Real DJs. Real coffee. Real community. No alcohol necessary.</p>
           </motion.div>
           <div className="values-grid">
             {[
@@ -306,19 +448,22 @@ function HomePage() {
         </div>
       </section>
 
+      {/* LIFESTYLE BANNER — Good Energy */}
       <section className="lifestyle-banner">
-        <img src="/products/move-body-tee-lifestyle.png" alt="Move Your Body" className="lifestyle-banner-img" />
+        <img src="/products/good-energy-hoodie-lifestyle.png" alt="Good Energy Club" className="lifestyle-banner-img" />
         <div className="lifestyle-banner-overlay" />
         <div className="lifestyle-banner-content">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <h2>Move Your Body</h2>
-            <p>Morning Rave &mdash; AZ</p>
+            <h2>Good Energy<br />Only</h2>
+            <p>Lumen Energy &mdash; For The Morning Ravers</p>
           </motion.div>
         </div>
       </section>
 
+      {/* NEWSLETTER */}
       <section className="newsletter">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+          <div className="section-label" style={{ textAlign: 'center' }}>Stay Locked In</div>
           <div className="newsletter-title">Join the Movement</div>
           <p className="newsletter-sub">First access to merch drops, event tickets, and exclusive colorways.</p>
           <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
@@ -411,10 +556,7 @@ function ProductPage() {
           )}
 
           <h1 className="product-name">{product.name}</h1>
-          <div className="product-price">
-            {product.comparePrice && <span style={{ textDecoration: 'line-through', color: '#999', marginRight: 12 }}>${product.comparePrice}</span>}
-            ${product.price}
-          </div>
+          <div className="product-price">${product.price}</div>
           <p className="product-desc">{product.description}</p>
 
           {product.colors.length > 1 && (
@@ -474,6 +616,9 @@ function CollectionsPage() {
           </Link>
         ))}
       </div>
+      <BigMarquee variant="coral">
+        <span className="filled">DANCE BEFORE NOON</span> <span className="big-marquee-sep">/</span> <span className="filled">MOVE YOUR BODY</span> <span className="big-marquee-sep">/</span>
+      </BigMarquee>
       <section className="newsletter" style={{ marginTop: 0 }}>
         <div className="newsletter-title">Get Notified</div>
         <p className="newsletter-sub">Be the first to know when new collections drop.</p>
@@ -511,9 +656,25 @@ function AboutPage() {
           </motion.div>
         </div>
       </section>
+
+      <BigMarquee variant="dark">
+        <span className="coral">YOU ARE SO</span> <span className="filled">WELCOMED</span> <span className="big-marquee-sep">/</span>
+      </BigMarquee>
+
       <div className="about-image-grid">
-        <img src="/products/extra-lifestyle.png" alt="Club Lumen" />
-        <img src="/products/move-body-tee-lifestyle.png" alt="Club Lumen" />
+        <img src="/products/pool-party-group.png" alt="Pool party" />
+        <img src="/products/coffee-shop-group.png" alt="Coffee shop" />
+      </div>
+
+      <section className="pullquote">
+        <p className="pullquote-text">
+          "Strangers become friends on the dance floor. No alcohol required. Just bass, coffee, and <em>good energy.</em>"
+        </p>
+      </section>
+
+      <div className="about-image-grid">
+        <img src="/products/venue-friends.png" alt="Morning Rave venue" />
+        <img src="/products/extra-lifestyle.png" alt="Festival" />
       </div>
     </div>
   );
