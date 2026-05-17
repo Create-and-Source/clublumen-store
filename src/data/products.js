@@ -102,6 +102,20 @@ export const products = [
     images: ['/products/extra-lifestyle.png'],
   },
   {
+    id: 'morning-rave-tumbler',
+    name: 'The Morning Rave Tumbler',
+    price: 36,
+    category: 'accessories',
+    description: 'White stainless steel travel tumbler with vintage DJ turntable print. "THE MORNING RAVE / LUMEN ENTERTAINMENT / SPINNING GOOD VIBES / PHOENIX, AZ". Double-wall insulated, keeps coffee hot for hours.',
+    colors: [
+      { name: 'White', hex: '#FFFFFF' },
+    ],
+    sizes: ['One Size'],
+    featured: true,
+    badge: 'New',
+    images: ['/products/tumbler-lifestyle.png', '/products/tumbler-product.png'],
+  },
+  {
     id: 'dj-party-vibes-tote',
     name: 'DJ Party Vibes Tote Bag',
     price: 34,

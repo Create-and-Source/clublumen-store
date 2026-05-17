@@ -243,14 +243,20 @@ function ProductCard({ product, index }) {
 
 function HomePage() {
   const featured = products.filter(p => p.featured).slice(0, 6);
-  const videoRef = useRef(null);
-  const [videoReady, setVideoReady] = useState(false);
+  const mobileVideoRef = useRef(null);
+  const desktopVideoRef = useRef(null);
+  const [mobileVideoReady, setMobileVideoReady] = useState(false);
+  const [desktopVideoReady, setDesktopVideoReady] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play();
-        setVideoReady(true);
+      if (mobileVideoRef.current) {
+        mobileVideoRef.current.play();
+        setMobileVideoReady(true);
+      }
+      if (desktopVideoRef.current) {
+        desktopVideoRef.current.play();
+        setDesktopVideoReady(true);
       }
     }, 2000);
     return () => clearTimeout(timer);
@@ -263,13 +269,22 @@ function HomePage() {
         <div className="hero-bg-img hero-bg-desktop" style={{ backgroundImage: 'url(/products/hero-wide.png)' }} />
         <div className="hero-bg-img hero-bg-mobile" style={{ backgroundImage: 'url(/products/extra-lifestyle.png)' }} />
         <video
-          ref={videoRef}
+          ref={desktopVideoRef}
+          src="/products/hero-desktop.mp4"
+          muted
+          loop
+          playsInline
+          className="hero-video-desktop"
+          style={{ opacity: desktopVideoReady ? 1 : 0 }}
+        />
+        <video
+          ref={mobileVideoRef}
           src="/products/hero-mobile.mp4"
           muted
           loop
           playsInline
           className="hero-video-mobile"
-          style={{ opacity: videoReady ? 1 : 0 }}
+          style={{ opacity: mobileVideoReady ? 1 : 0 }}
         />
         <div className="hero-overlay" />
         <motion.div
