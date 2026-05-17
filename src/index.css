@@ -347,36 +347,36 @@ img { max-width: 100%; display: block; }
 .newsletter-form button:hover { opacity: 0.85; }
 
 /* FOOTER */
-.site-footer { background: var(--black); padding: 60px 40px 36px; }
+.site-footer { background: var(--cream); border-top: 1px solid var(--border); padding: 64px 40px 32px; }
 
 .footer-inner {
-  max-width: 1400px; margin: 0 auto;
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  max-width: 900px; margin: 0 auto; text-align: center;
 }
+
+.footer-logo { height: 64px; width: auto; margin: 0 auto 20px; }
 
 .footer-brand-desc {
-  font-size: 14px; color: rgba(255,255,255,0.35); line-height: 1.7; max-width: 260px;
+  font-size: 15px; color: var(--text-secondary); line-height: 1.8; max-width: 400px; margin: 0 auto 28px;
 }
 
-.social-link { color: rgba(255,255,255,0.4); transition: color 0.3s; }
+.social-link { color: var(--text-muted); transition: color 0.3s; }
 .social-link:hover { color: var(--coral); }
 
-.footer-col h4 {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 16px;
+.footer-links {
+  display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 32px;
 }
 
-.footer-col a {
-  display: block; font-size: 14px; color: rgba(255,255,255,0.5);
-  margin-bottom: 10px; transition: color 0.3s;
+.footer-links a {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-muted); transition: color 0.3s;
 }
-.footer-col a:hover { color: #fff; }
+.footer-links a:hover { color: var(--coral); }
 
 .footer-bottom {
-  max-width: 1400px; margin: 48px auto 0; padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  max-width: 900px; margin: 0 auto; padding-top: 24px;
+  border-top: 1px solid var(--border);
   display: flex; justify-content: space-between; align-items: center;
-  font-size: 12px; color: rgba(255,255,255,0.2);
+  font-size: 12px; color: var(--text-muted);
 }
 
 /* PRODUCT PAGE */

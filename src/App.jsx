@@ -152,44 +152,26 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-inner">
-        <div>
-          <img src="/products/lumen-logo-v2.png" alt="Club Lumen" style={{ width: 100, marginBottom: 16 }} />
-          <p className="footer-brand-desc">
-            Coffee + Music + Community.<br />
-            The sober-curious morning rave.<br />
-            Phoenix, AZ.
-          </p>
-          <div style={{ display: 'flex', gap: 16, marginTop: 20 }}>
-            <a href="https://www.instagram.com/clublumen.az/" target="_blank" rel="noopener noreferrer" className="social-link">
-              <InstagramIcon size={18} />
-            </a>
-          </div>
-        </div>
-        <div className="footer-col">
-          <h4>Shop</h4>
-          <Link to="/shop">All Products</Link>
-          <Link to="/shop">Tees</Link>
-          <Link to="/shop">Hoodies</Link>
-          <Link to="/shop">Crops & Tanks</Link>
-          <Link to="/shop">Accessories</Link>
-        </div>
-        <div className="footer-col">
-          <h4>Club Lumen</h4>
-          <Link to="/about">About</Link>
+        <img src="/products/lumen-logo-v2.png" alt="Club Lumen" className="footer-logo" />
+        <p className="footer-brand-desc">
+          Coffee + Music + Community.<br />
+          The sober-curious morning rave. Phoenix, AZ.
+        </p>
+        <div className="footer-links">
+          <Link to="/shop">Shop</Link>
           <Link to="/collections">Collections</Link>
+          <Link to="/about">About</Link>
           <a href="https://theclublumen.com/" target="_blank" rel="noopener noreferrer">Events</a>
           <a href="https://www.instagram.com/clublumen.az/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
-        <div className="footer-col">
-          <h4>Info</h4>
-          <a href="#">Shipping</a>
-          <a href="#">Returns</a>
-          <a href="#">Size Guide</a>
-          <a href="#">Contact</a>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 32 }}>
+          <a href="https://www.instagram.com/clublumen.az/" target="_blank" rel="noopener noreferrer" className="social-link">
+            <InstagramIcon size={20} />
+          </a>
         </div>
       </div>
       <div className="footer-bottom">
-        <span>&copy; {new Date().getFullYear()} Club Lumen. All rights reserved.</span>
+        <span>&copy; {new Date().getFullYear()} Club Lumen</span>
         <span>The Morning Rave&trade;</span>
       </div>
     </footer>
