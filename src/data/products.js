@@ -101,6 +101,20 @@ export const products = [
     badge: 'New',
     images: ['/products/extra-lifestyle.png'],
   },
+  {
+    id: 'dj-party-vibes-tote',
+    name: 'DJ Party Vibes Tote Bag',
+    price: 34,
+    category: 'accessories',
+    description: 'Black canvas tote with retro disco ball DJ character. "MORNING RAVE / DJ PARTY VIBES / NONSTOP FUN / Lumen Entertainment". Heavyweight cotton canvas, reinforced handles.',
+    colors: [
+      { name: 'Black', hex: '#111111' },
+    ],
+    sizes: ['One Size'],
+    featured: true,
+    badge: 'New',
+    images: ['/products/tote-bag-lifestyle.png'],
+  },
 ];
 
 export const collections = [
@@ -108,4 +122,5 @@ export const collections = [
   { id: 'tees', name: 'Tees', filter: (p) => p.category === 'tees' },
   { id: 'crops', name: 'Crops & Tanks', filter: (p) => p.category === 'crops' || p.category === 'tanks' },
   { id: 'hoodies', name: 'Hoodies', filter: (p) => p.category === 'hoodies' },
+  { id: 'accessories', name: 'Accessories', filter: (p) => p.category === 'accessories' },
 ];
