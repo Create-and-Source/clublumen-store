@@ -90,9 +90,16 @@ img { max-width: 100%; display: block; }
   background-size: cover; background-position: center;
 }
 .hero-bg-mobile { display: none; }
+.hero-video-mobile {
+  display: none; position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: opacity 1s ease;
+  z-index: 1;
+}
 @media (max-width: 640px) {
   .hero-bg-desktop { display: none; }
   .hero-bg-mobile { display: block; }
+  .hero-video-mobile { display: block; }
 }
 
 .hero-overlay {

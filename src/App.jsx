@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, useRef, createContext, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Menu, X, ArrowRight, Minus, Plus, ChevronRight, Coffee, Music, Users } from 'lucide-react';
@@ -243,6 +243,18 @@ function ProductCard({ product, index }) {
 
 function HomePage() {
   const featured = products.filter(p => p.featured).slice(0, 6);
+  const videoRef = useRef(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.play();
+        setVideoReady(true);
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
@@ -250,6 +262,15 @@ function HomePage() {
       <section className="hero">
         <div className="hero-bg-img hero-bg-desktop" style={{ backgroundImage: 'url(/products/hero-wide.png)' }} />
         <div className="hero-bg-img hero-bg-mobile" style={{ backgroundImage: 'url(/products/extra-lifestyle.png)' }} />
+        <video
+          ref={videoRef}
+          src="/products/hero-mobile.mp4"
+          muted
+          loop
+          playsInline
+          className="hero-video-mobile"
+          style={{ opacity: videoReady ? 1 : 0 }}
+        />
         <div className="hero-overlay" />
         <motion.div
           className="hero-content"
