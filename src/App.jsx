@@ -235,7 +235,8 @@ function HomePage() {
   return (
     <>
       <section className="hero">
-        <div className="hero-bg-img" style={{ backgroundImage: 'url(/products/extra-lifestyle.png)' }} />
+        <div className="hero-bg-img hero-bg-desktop" style={{ backgroundImage: 'url(/products/hero-wide.png)' }} />
+        <div className="hero-bg-img hero-bg-mobile" style={{ backgroundImage: 'url(/products/extra-lifestyle.png)' }} />
         <div className="hero-overlay" />
         <motion.div
           className="hero-content"

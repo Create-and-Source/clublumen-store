@@ -89,6 +89,11 @@ img { max-width: 100%; display: block; }
   position: absolute; inset: 0;
   background-size: cover; background-position: center;
 }
+.hero-bg-mobile { display: none; }
+@media (max-width: 640px) {
+  .hero-bg-desktop { display: none; }
+  .hero-bg-mobile { display: block; }
+}
 
 .hero-overlay {
   position: absolute; inset: 0;
